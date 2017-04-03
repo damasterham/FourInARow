@@ -6,6 +6,32 @@ import java.awt.*;
 //
 public class Game
 {
+    private Player p1;
+    private Player p2;
+    private IGameEvents gameEvents;
+
+    public Game(Player p1, Player p2, IGameEvents gameEvents)
+    {
+        this.p1 = p1;
+        this.p2 = p2;
+        this.gameEvents = gameEvents;
+    }
+
+    private void round(Player player, Board board)
+    {
+        int col = gameEvents.placePiece();
+
+        if (board.placePiece(player.generatePiece(), col))
+        {
+
+        }
+    }
+
+    public void startGame()
+    {
+
+    }
+
     public static void main(String[] args)
     {
         Board board = new Board();
