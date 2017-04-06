@@ -8,12 +8,12 @@ public class Piece
 {
     private int id;
     private Player player;
-    private Color color;
+    private String color;
     private char symbal;
     private int col;
     private int row;
 
-    public Piece(int id, Player player, Color color)
+    public Piece(int id, Player player, String color)
     {
         this.id = id;
         this.player = player;

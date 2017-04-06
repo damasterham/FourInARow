@@ -75,8 +75,9 @@ public class Client implements Runnable
         
     }
 
-    private void placePiece(String colorName, String col, String row)
+    private void placePiece(String colorHex, String col, String row)
     {
+        app.placePiece(colorHex, Integer.parseInt(col), Integer.parseInt(row));
     }
 
     private void placementFailed()

@@ -11,25 +11,25 @@ public class Player
 
     private int id;
     private String name;
-    private Color color;
+    private String colorhex;
     private String colorName;
 
     public Player()
     {
     }
 
-    public Player(String name, String color)
+    /*public Player(String name, String color)
     {
         id = count++;
         this.name = name;
         setColor(color);
-    }
+    }*/
 
-    public Player(String name, Color color)
+    public Player(String name, String colorHex)
     {
         id = count++;
         this.name = name;
-        this.color = color;
+        this.colorhex = colorHex;
     }
 
     public int getId() {
@@ -40,8 +40,8 @@ public class Player
         return name;
     }
 
-    public Color getColor() {
-        return color;
+    public String getColor() {
+        return colorhex;
     }
 
 //    public String getColorName()
@@ -55,13 +55,13 @@ public class Player
 
     public void setColor(String color)
     {
-        this.color = Color.decode("0x"+color);
+        this.colorhex = color;
         //colorName = color;
     }
 
     public Piece generatePiece()
     {
-        return new Piece(pieceCount++, this, color);
+        return new Piece(pieceCount++, this, colorhex);
     }
 
     public static void clear()

@@ -1,7 +1,9 @@
 package gameclient;//
 
 import com.sun.javafx.image.IntPixelGetter;
+import game.Player;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
@@ -24,11 +26,12 @@ import java.io.IOException;
 //
 public class FourInARow extends Application
 {
+    private int circleRadius = 10;
+    private int posOffset = 15;
     private Client client;
     private Circle[][] board;
     private BorderPane gamePane;
     private Stage stage;
-
 
     private void connectToServer(String name, String color, String host, int port)
     {
@@ -44,6 +47,16 @@ public class FourInARow extends Application
         }
     }
 
+    public void placePiece(String colorHex, int col, int row)
+    {
+        Circle c = new Circle(10);
+        c.setFill(Paint.valueOf(colorHex));
+        c.setLayoutX(col*posOffset);
+        c.setLayoutY(row*posOffset);
+
+        board[col][row] = c;
+    }
+
     public void initializeBoard(int col, int row)
     {
         board = new Circle[col][row];
@@ -51,35 +64,52 @@ public class FourInARow extends Application
         {
             for (int j = 0; j < row; j++)
             {
-                Circle c =  new Circle(1);
-                c.setFill(Paint.valueOf("000"));
+                Circle c =  new Circle(10);
+                c.setFill(Paint.valueOf("000000"));
                 board[i][j] = c;
             }
         }
+
+        gameScene();
     }
 
     public void renderBoard()
     {
-
-        for (int i = 0; i < board.length; i++)
+        Platform.runLater(() ->
         {
-            for (int j = 0; j < board[0].length; j++)
+            for (int i = 0; i < board.length; i++)
             {
-                Circle piece = board[i][j];
-                piece.setLayoutX(i * 2);
-                piece.setLayoutY(j * 2);
-                gamePane.getChildren().add(piece);
+                for (int j = 0; j < board[0].length; j++)
+                {
+                    Circle piece = board[i][j];
+                    piece.setLayoutX(i * 2);
+                    piece.setLayoutY(j * 2);
+
+                    gamePane.getChildren().add(piece);
+
+                }
             }
+            this.stage.setScene(new Scene(gamePane));
+            this.stage.show();
         }
+
+        );
+
     }
 
 
     public void gameScene()
     {
+
         gamePane = new BorderPane();
-        Scene scene = new Scene(gamePane);
-        stage.setScene(scene);
-        stage.show();
+     /*   Scene scene1 = new Scene(gamePane);
+        Platform.runLater(() ->
+        {
+            this.stage.setScene(scene1);
+            this.stage.show();
+        }
+
+        );*/
         renderBoard();
     }
 
@@ -112,8 +142,12 @@ public class FourInARow extends Application
                 ok
         );
 
+//        Circle c = new Circle(100);
+//        c.setFill(Paint.valueOf("000000"));
+
         BorderPane wrap = new BorderPane();
         wrap.setTop(topPane);
+        //wrap.setCenter(c);
 
 
         Scene scene = new Scene(wrap);
@@ -121,7 +155,7 @@ public class FourInARow extends Application
         stage.setScene(scene);
         stage.show();
 
-
+        Platform.setImplicitExit(false);
     }
 
 
