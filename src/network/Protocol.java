@@ -1,29 +1,74 @@
 package network;
 
-import javafx.event.Event;
-import javafx.event.EventHandler;
+import game.Player;
+
+import java.io.IOException;
+import java.io.StringReader;
+import java.util.stream.Stream;
 
 /**
  * Created by DaMasterHam on 03-04-2017.
  */
-public abstract class Protocol
+public class Protocol
 {
-    private String header;
-    private String body;
-    private EventHandler eventHandler;
+    public static final String NEW_PLAYER = "new_player";
+    public static final String GAME_START = "game_start";
+    public static final String GAME_WON = "game_won";
+    public static final String GAME_LOST = "game_lost";
+    public static final String TURN = "player_turn";
+    public static final String PLACE_PIECE = "place_piece";
+    public static final String PLACED_PIECE = "placed_piece";
+    public static final String PLACE_FAIL = "placement_failure";
+    public static final String WRONG_PLAYER = "wrong_player";
+    public static final String WINNER = "winner";
 
-    public String getHeader()
+    private static final String delimiter = " ";
+
+
+    public static String[] unpack(String data)
     {
-        return header;
+        return data.split(delimiter);
     }
 
-    public String getBody()
+    private static String pack(Object... values)
     {
-        return body;
+        String result = "";
+
+        for (int i = 0; i < values.length; i++)
+        {
+            result = " " + values[i];
+        }
+
+        return result;
     }
 
-    public void handle(Event event)
+    public static String packNewPlayer(String name, String colorName)
     {
-        eventHandler.handle(event);
+        return NEW_PLAYER + pack(name, colorName);
+    }
+
+    public static String packPlacePiece(int col)
+    {
+        return PLACE_PIECE + pack(col);
+    }
+
+    public static String packPlacedPiece(String color, int lastCol, int lastRow)
+    {
+        return PLACED_PIECE + pack(color,lastCol,lastRow);
+    }
+
+    public static String packFailedPlacement()
+    {
+        return PLACE_FAIL;
+    }
+
+    public static String packWrongPlayer()
+    {
+        return WRONG_PLAYER;
+    }
+
+    public static String packWinner(String name)
+    {
+        return WINNER + pack(name);
     }
 }

@@ -1,7 +1,5 @@
 package game;//
 
-import java.awt.*;
-
 //Created by DaMasterHam on 30-03-2017.
 //
 public class Game
@@ -11,6 +9,7 @@ public class Game
     private Board board;
     private IGameEvents gameEvents;
     private boolean won;
+    private int playerTurn;
 
     public Game(Player p1, Player p2, IGameEvents gameEvents)
     {
@@ -19,31 +18,53 @@ public class Game
         board = new Board();
         this.gameEvents = gameEvents;
         won = false;
+        playerTurn = p1.getId();
     }
 
-    private void round(Player player)
+    private int otherPlayer()
     {
-        int col = gameEvents.placePieceInColumn();
+        if (p1.getId() == playerTurn)
+            return p2.getId();
+        else if (p2.getId() == playerTurn)
+            return p1.getId();
+
+        return -1;
+    }
+
+    public void placePiece(Player player, int col)
+    {
+        if (won)
+            return;
+
+        if (player.getId() != playerTurn)
+        {
+            gameEvents.wrongPlayer(player);
+            return;
+        }
+        //gameEvents.placePieceInColumn();
 
         if (board.placePiece(player.generatePiece(), col))
         {
-            gameEvents.placementSuccess();
+            gameEvents.placementSuccess(player, board.getLastAddedCol(), board.getLastAddedRow());
+            playerTurn = otherPlayer();
         }
+        else
+            gameEvents.placementFailure(player);
 
         if (board.checkWin())
-            gameEvents.winner();
+            gameEvents.winner(player);
     }
 
-    public void startGame()
-    {
-        gameEvents.gameStart();
-        while (!won)
-        {
-            round(p1);
-            round(p2);
-        }
-        gameEvents.gameOver();
-    }
+//    public void startGame()
+//    {
+//        gameEvents.gameStart();
+//        while (!won)
+//        {
+//            round(p1);
+//            round(p2);
+//        }
+//        gameEvents.gameOver();
+//    }
 
     /*public static void main(String[] args)
     {

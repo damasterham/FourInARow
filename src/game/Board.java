@@ -148,12 +148,18 @@ public class Board
 
     public boolean placePiece(Piece piece, int col)
     {
+        // Is column within bounds
+        if (withinBounds(col, 0, matrix.length))
+            return false;
+
+        // Get top row index
         int row = matrix[col].length -1;
 
-        // Check top of column
+        // Check if top row has a piece
         if (matrix[col][row] != null)
             return false;
 
+        // Otherwise check further down the rows
         return placePiece(piece, col, row);
     }
 
@@ -180,6 +186,14 @@ public class Board
     public Piece pieceAt(int col, int row)
     {
         return matrix[col][row];
+    }
+
+    public int getLastAddedCol() {
+        return lastAddedCol;
+    }
+
+    public int getLastAddedRow() {
+        return lastAddedRow;
     }
 
     public void print()

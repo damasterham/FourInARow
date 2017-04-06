@@ -12,6 +12,18 @@ public class Player
     private int id;
     private String name;
     private Color color;
+    private String colorName;
+
+    public Player()
+    {
+    }
+
+    public Player(String name, String color)
+    {
+        id = count++;
+        this.name = name;
+        setColor(color);
+    }
 
     public Player(String name, Color color)
     {
@@ -32,6 +44,21 @@ public class Player
         return color;
     }
 
+    public String getColorName()
+    {
+        return colorName;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setColor(String color)
+    {
+        this.color = Color.getColor(color);
+        colorName = color;
+    }
+
     public Piece generatePiece()
     {
         return new Piece(pieceCount++, this, color);
@@ -42,4 +69,5 @@ public class Player
         count = 0;
         pieceCount = 0;
     }
+
 }
