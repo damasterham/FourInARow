@@ -211,4 +211,14 @@ public class Board
 
         System.out.println();
     }
+
+    public int getColSize()
+    {
+        return matrix.length;
+    }
+
+    public int getRowSize()
+    {
+        return matrix[0].length;
+    }
 }

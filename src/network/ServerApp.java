@@ -20,7 +20,9 @@ public class ServerApp
             case "exit" : running = false;
             break;
             case "start-server" :
-                try { server.startServer(); }
+                try { server.startServer();
+                    System.out.println("Started server");
+                }
                 catch (IOException ex)
                 {ex.printStackTrace();}
             break;

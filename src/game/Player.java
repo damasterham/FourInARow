@@ -44,10 +44,10 @@ public class Player
         return color;
     }
 
-    public String getColorName()
-    {
-        return colorName;
-    }
+//    public String getColorName()
+//    {
+//        return colorName;
+//    }
 
     public void setName(String name) {
         this.name = name;
@@ -55,8 +55,8 @@ public class Player
 
     public void setColor(String color)
     {
-        this.color = Color.getColor(color);
-        colorName = color;
+        this.color = Color.decode("0x"+color);
+        //colorName = color;
     }
 
     public Piece generatePiece()

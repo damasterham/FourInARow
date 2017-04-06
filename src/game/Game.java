@@ -55,7 +55,18 @@ public class Game
             gameEvents.winner(player);
     }
 
-//    public void startGame()
+    public int getColSize()
+    {
+        return board.getColSize();
+    }
+
+    public int getRowSize()
+    {
+        return board.getRowSize();
+    }
+
+
+    //    public void startGame()
 //    {
 //        gameEvents.gameStart();
 //        while (!won)

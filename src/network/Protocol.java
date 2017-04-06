@@ -6,11 +6,15 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.util.stream.Stream;
 
+import static network.ClientProtocol.*;
+import static network.ServerProtocol.*;
+
 /**
  * Created by DaMasterHam on 03-04-2017.
  */
 public class Protocol
 {
+/*
     public static final String NEW_PLAYER = "new_player";
     public static final String GAME_START = "game_start";
     public static final String GAME_WON = "game_won";
@@ -21,6 +25,7 @@ public class Protocol
     public static final String PLACE_FAIL = "placement_failure";
     public static final String WRONG_PLAYER = "wrong_player";
     public static final String WINNER = "winner";
+*/
 
     private static final String delimiter = " ";
 
@@ -36,7 +41,7 @@ public class Protocol
 
         for (int i = 0; i < values.length; i++)
         {
-            result = " " + values[i];
+            result += " " + values[i];
         }
 
         return result;
@@ -70,5 +75,10 @@ public class Protocol
     public static String packWinner(String name)
     {
         return WINNER + pack(name);
+    }
+
+    public static String packInitializeBoard(int colSize, int rowSize)
+    {
+        return BOARD_INIT + pack(colSize, rowSize);
     }
 }

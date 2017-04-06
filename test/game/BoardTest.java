@@ -142,4 +142,28 @@ class BoardTest
         assertTrue(board.checkWin());
     }
 
+    @Test
+    void win4DiagonalOposite()
+    {
+        Player p1 = new Player("Blarb", Color.blue);
+        Player p2 = new Player("Wooples", Color.ORANGE);
+
+        Board board = new Board();
+        for (int i = 0; i < 2; i++) // Place six
+        {
+            for (int j = 0; j < 3 - i ; j++)
+            {
+                board.placePiece(p1.generatePiece(), i);
+            }
+        }
+
+        for (int i = 0; i < 4; i++)
+        {
+            board.placePiece(p2.generatePiece(), i);
+        }
+
+        board.print();
+        assertTrue(board.checkWin());
+    }
+
 }
